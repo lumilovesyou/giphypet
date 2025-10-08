@@ -1,12 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("./assets/images/background.png");
+    background-size: 7%;
+    color: #ddddf6;
+    font-size: 0.75em;
+}
+#centre {
+    width: 100vw;
+    height: 100vh;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.centre {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1% 0 1% 0;
+}
+p {
+    margin: 1% 0 1% 0;
+}
 table {
-    border: solid black 1px;
+    margin: 0;
+    padding: 0;
+    border: solid #ddddf6 1px;
     border-radius: 1%
 }
 th {
-    border: solid black 1px;
+    border: solid #ddddf6 1px;
     border-radius: 1%
 }
 button {
     width: 90%;
+}
+textarea {
+    min-height: 200%;
+    width: 90%;
+    resize: none;
 }
