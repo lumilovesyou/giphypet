@@ -1,0 +1,12 @@
+
+table {
+    border: solid black 1px;
+    border-radius: 1%
+}
+th {
+    border: solid black 1px;
+    border-radius: 1%
+}
+button {
+    width: 90%;
+}
