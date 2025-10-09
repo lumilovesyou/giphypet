@@ -23,13 +23,43 @@ body {
     flex-direction: column;
     padding: 1% 0 1% 0;
 }
+
+/* World + Pet */
+#enclosure {
+    position: relative;
+}
+#pet {
+    width: 50%;
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: grab;
+    z-index: 1;
+}
+
+/* Shop */
+#shop-title {
+    margin-bottom: 5%;
+}
 .shop-row {
     font-size: 1em;
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 10%;
+    user-select: none;
 }
+.shop-row p {
+    cursor: pointer;
+    scale: 120%;
+}
+.shop-row p:active {
+    filter: brightness(75%);
+}
+
+
+/* General Elements */
 p {
     margin: 1% 0 1% 0;
 }

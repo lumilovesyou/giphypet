@@ -8,20 +8,24 @@
     <link rel="stylesheet" href="giphy.css">
 </head>
 <body>
-    <script src="giphy.js"></script>
     <div id="centre">
     <table>
         <tr>
             <th>Name: Ruby</th><th>Born: D/M/Y</th><th>Element: Water</th>
         </tr>
         <tr>
-            <th>Happiness: *****</th><th>Hunger: *****</th><th>Money: £10</th>
+            <th>Happiness: *****</th><th>Hunger: *****</th><th id="money">Money: £10</th>
         </tr>
         <tr>
-            <th colspan="2"><img src="https://lumilovesyou.github.io/lumiverse/assets/images/gifypet/background.webp"></th>
+            <th colspan="2">
+                <div id="enclosure">
+                    <img id="world" src="https://lumilovesyou.github.io/lumiverse/assets/images/gifypet/background.webp">
+                    <img id="pet" draggable="false" src="https://lumilovesyou.github.io/lumiverse/assets/images/gifypet/mildew.gif">
+                </div>
+            </th>
             <th>
                 <span>
-                    Shop (£5):
+                    <p id="shop-title">Shop (£5):</p>
                     <div class="shop-row"><p>🍔</p><p>🍕</p><p>🌮</p></div>
                     <div class="shop-row"><p>🥗</p><p>🥕</p><p>🥬</p></div>
                     <div class="shop-row"><p>☕</p><p>🥛</p><p>🧃</p></div>
@@ -43,5 +47,6 @@
         </tr>
     </table>
     </div>
+    <script src="giphy.js"></script>
 </body>
 </html>
