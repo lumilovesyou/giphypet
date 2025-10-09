@@ -28,7 +28,6 @@ function startDragPet(event) {
     mouseY = event.clientY;
     document.onmousemove = movePet;
     document.onmouseup = stopDraggingPet;
-    document.onmouseup = stopDraggingPet;
 }
 
 function movePet(event) {
@@ -42,16 +41,23 @@ function movePet(event) {
 }
 
 function stopDraggingPet() {
-
     document.onmouseup = null;
     document.onmousemove = null;
+    petPosition(pet.offsetLeft - petX, pet.offsetTop - petY, true);
 }
 
-function petPosition(x, y) {
-    pet.style.top = clamp(y, pet.innerHeight * 0.055, pet.innerHeight * 0.8) + "px";
-    pet.style.left = clamp(x, pet.innerWidth * -0.1, pet.innerWidth * 0.9) + "px";
+function petPosition(x, y, hardClamp) {
+    if (hardClamp) {
+        pet.style.top = clamp(y, 0, pet.parentElement.clientWidth - pet.offsetWidth + 3) + "px";
+        pet.style.left = clamp(x, 0, pet.parentElement.clientHeight - pet.offsetHeight - 3) + "px";
+    } else {
+        let halfWidth = (pet.offsetWidth / 2);
+        let halfHeight = (pet.offsetHeight / 2)
+        pet.style.top = clamp(y, 0 - halfWidth, pet.parentElement.clientWidth - pet.offsetWidth + halfWidth) + "px";
+        pet.style.left = clamp(x, 0 - halfHeight, pet.parentElement.clientHeight - pet.offsetHeight + halfHeight) + "px";
+    }
 }
-//
+////
 
 function playSound(sound) {
     soundStack.splice(0, 0, new Audio(sound));

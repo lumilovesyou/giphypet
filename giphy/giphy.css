@@ -27,6 +27,7 @@ body {
 /* World + Pet */
 #enclosure {
     position: relative;
+    overflow: hidden;
 }
 #pet {
     width: 50%;
@@ -35,7 +36,9 @@ body {
     top: 0;
     left: 0;
     cursor: grab;
+    pointer-events: visible;
     z-index: 1;
+    border: 1px red solid;
 }
 
 /* Shop */
@@ -67,11 +70,11 @@ table {
     margin: 0;
     padding: 0;
     border: solid #ddddf6 1px;
-    border-radius: 1%
+    border-radius: 1%;
 }
 th {
     border: solid #ddddf6 1px;
-    border-radius: 1%
+    border-radius: 1%;
 }
 button {
     width: 90%;
