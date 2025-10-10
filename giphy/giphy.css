@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("./assets/images/background.png");
+    background-image: url("./assets/images/giphypet/background.png");
     background-size: 7%;
     color: #ddddf6;
     font-size: 0.75em;
@@ -38,7 +38,6 @@ body {
     cursor: grab;
     pointer-events: visible;
     z-index: 1;
-    border: 1px red solid;
 }
 
 /* Shop */

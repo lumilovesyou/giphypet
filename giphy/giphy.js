@@ -2,6 +2,7 @@ console.log("Hello world!");
 let soundStack = ["","","","","","","",""];
 let pet = document.getElementById("pet");
 let mouseX, mouseY, petX, petY = 0
+let beingDragged = false;
 let money = 10;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,11 +20,25 @@ for (let i = 0; i < shopRows.length; i++) {
 }
 
 pet.onmousedown = startDragPet;
+walk(true);
 });
 
 ////Pet movement
+// //Random movement
+function walk(override ) {
+    if (!beingDragged && random(1, 5) == 1 || override) {
+        walkTo(random(0, 100), random(0, 100));
+    }
+    setTimeout(walk, 2000);
+}
+
+function walkTo(x, y) {
+    petPosition(((pet.parentElement.clientWidth - pet.offsetWidth) / 100) * x, ((pet.parentElement.clientHeight - pet.offsetHeight) / 100) * y);
+}
+// //Dragging
 function startDragPet(event) {
     event.preventDefault();
+    beingDragged = true;
     mouseX = event.clientX; 
     mouseY = event.clientY;
     document.onmousemove = movePet;
@@ -34,13 +49,18 @@ function movePet(event) {
     event.preventDefault();
     petX = mouseX - event.clientX;
     petY = mouseY - event.clientY;
+    if ((Math.abs(event.clientX - mouseX) > 20 || Math.abs(event.clientY - mouseY) > 20) && random(1,35) == 1) {
+        console.log("He'll be sadder now and lose happiness once i implement that")
+    }
     mouseX = event.clientX;
     mouseY = event.clientY;
+
 
     petPosition(pet.offsetLeft - petX, pet.offsetTop - petY);
 }
 
 function stopDraggingPet() {
+    beingDragged = false;
     document.onmouseup = null;
     document.onmousemove = null;
     petPosition(pet.offsetLeft - petX, pet.offsetTop - petY, true);
@@ -57,10 +77,12 @@ function petPosition(x, y, hardClamp) {
         pet.style.left = clamp(x, 0 - halfHeight, pet.parentElement.clientHeight - pet.offsetHeight + halfHeight) + "px";
     }
 }
+// //
 ////
 
 function playSound(sound) {
     soundStack.splice(0, 0, new Audio(sound));
+    soundStack[0].volume = 0.35;
     soundStack[0].play();
     soundStack.pop();
 }
