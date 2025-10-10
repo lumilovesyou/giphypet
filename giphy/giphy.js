@@ -27,18 +27,35 @@ for (let i = 0; i < shopRows.length; i++) {
 pet.onmousedown = startDragPet;
 walkLoop(true);
 hungerLoop();
-talk();
+talk(0);
 });
 
 ////Pet functions
-function talk(event) {
-    let text = ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"];
-    if (event == "shake") {
-        text = ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"]
+function talk(id, conditions) {
+    let text = [
+        ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"], //Normal
+        ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"], //Being shaken
+        ["I'm feeling a little hungry...", "*Stomach grumble*", "Snackie? owo", "Hungie...", "I'm hungry"] //Hungry
+    ];
+    let conditionBools = [
+        beingDragged == 0
+    ]
+    let doTalking = true;
+    if (typeof(conditions) == "object") {
+        for (let i = 0; i < conditions.length; i++) {
+            if (conditionBools[conditions[i]] == false) {
+                doTalking = false;
+                break;
+            }
+        }
+    } else if (typeof(conditions) == "number") {
+        doTalking = conditionBools[conditions];
     }
-    text = text[random(0, text.length - 1)];
-    speechBubble.innerHTML = `${speechBubble.innerHTML}\n> ${text}`;
-    speechBubble.scrollTop = speechBubble.scrollHeight;
+    if (doTalking) {
+        text = text[id][random(0, text[id].length - 1)];
+        speechBubble.innerHTML = `${speechBubble.innerHTML}\n> ${text}`;
+        speechBubble.scrollTop = speechBubble.scrollHeight;
+    }
 }
 ////
 
@@ -46,6 +63,7 @@ function talk(event) {
 function hungerLoop() {
     if (random(1, 35) == 1) {
         updateHunger("-", 1);
+        talk(2, 0);
     }
     setTimeout(hungerLoop, 1000);
 }
@@ -77,7 +95,7 @@ function movePet(event) {
     petX = mouseX - event.clientX;
     petY = mouseY - event.clientY;
     if ((Math.abs(event.clientX - mouseX) > 20 || Math.abs(event.clientY - mouseY) > 20) && random(1,35) == 1) {
-        talk("shake");
+        talk(1);
         updateHappiness("-", 1);
     }
     mouseX = event.clientX;
