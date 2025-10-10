@@ -1,8 +1,13 @@
 console.log("Hello world!");
 let soundStack = ["","","","","","","",""];
 let pet = document.getElementById("pet");
-let mouseX, mouseY, petX, petY = 0
+let speechBubble = document.getElementById("speechBubble");
+let mouseX, mouseY, petX, petY = 0;
 let beingDragged = false;
+
+//Creature Values
+let happiness = 10;
+let hunger = 10;
 let money = 10;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,18 +25,40 @@ for (let i = 0; i < shopRows.length; i++) {
 }
 
 pet.onmousedown = startDragPet;
-walk(true);
+walkLoop(true);
+hungerLoop();
+talk();
 });
 
-////Pet movement
-// //Random movement
-function walk(override ) {
+////Pet functions
+function talk(event) {
+    let text = ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"];
+    if (event == "shake") {
+        text = ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"]
+    }
+    text = text[random(0, text.length - 1)];
+    speechBubble.innerHTML = `${speechBubble.innerHTML}\n> ${text}`;
+    speechBubble.scrollTop = speechBubble.scrollHeight;
+}
+////
+
+////Pet random events
+function hungerLoop() {
+    if (random(1, 35) == 1) {
+        updateHunger("-", 1);
+    }
+    setTimeout(hungerLoop, 1000);
+}
+
+function walkLoop(override) {
     if (!beingDragged && random(1, 5) == 1 || override) {
         walkTo(random(0, 100), random(0, 100));
     }
-    setTimeout(walk, 2000);
+    setTimeout(walkLoop, 2000);
 }
+////
 
+////Pet movement
 function walkTo(x, y) {
     petPosition(((pet.parentElement.clientWidth - pet.offsetWidth) / 100) * x, ((pet.parentElement.clientHeight - pet.offsetHeight) / 100) * y);
 }
@@ -50,7 +77,8 @@ function movePet(event) {
     petX = mouseX - event.clientX;
     petY = mouseY - event.clientY;
     if ((Math.abs(event.clientX - mouseX) > 20 || Math.abs(event.clientY - mouseY) > 20) && random(1,35) == 1) {
-        console.log("He'll be sadder now and lose happiness once i implement that")
+        talk("shake");
+        updateHappiness("-", 1);
     }
     mouseX = event.clientX;
     mouseY = event.clientY;
@@ -72,7 +100,7 @@ function petPosition(x, y, hardClamp) {
         pet.style.left = clamp(x, 0, pet.parentElement.clientHeight - pet.offsetHeight - 3) + "px";
     } else {
         let halfWidth = (pet.offsetWidth / 2);
-        let halfHeight = (pet.offsetHeight / 2)
+        let halfHeight = (pet.offsetHeight / 2);
         pet.style.top = clamp(y, 0 - halfWidth, pet.parentElement.clientWidth - pet.offsetWidth + halfWidth) + "px";
         pet.style.left = clamp(x, 0 - halfHeight, pet.parentElement.clientHeight - pet.offsetHeight + halfHeight) + "px";
     }
@@ -80,6 +108,7 @@ function petPosition(x, y, hardClamp) {
 // //
 ////
 
+////Pet value control
 function playSound(sound) {
     soundStack.splice(0, 0, new Audio(sound));
     soundStack[0].volume = 0.35;
@@ -93,10 +122,54 @@ function updateMoney(action, integer) {
     } else if (action == "+") {
         money += integer;
     }
-    document.getElementById("money").innerText = "Money: £" + money;
+    document.getElementById("money").innerText = `Money: £${money}`;
 }
 
-//Core functions
+function updateHappiness(action, integer) {
+    if (action == "-") {
+        happiness -= integer;
+    } else if (action == "+") {
+        happiness += integer;
+    }
+    happiness = clamp(happiness, 0, 10);
+    let text = "";
+    for (let i = 0; i < Math.floor(happiness / 2); i++) {
+        text = text + "*";
+    }
+    if (happiness % 2 != 0) {
+        text = text + "^";
+    }
+    for (let i = 0; i < Math.floor((10 - happiness) / 2); i++) {
+        text = text + "_";
+    }
+    document.getElementById("happiness").innerText = `Happiness: ${text}`;
+}
+
+function updateHunger(action, integer) {
+    if (action == "-") {
+        hunger -= integer;
+    } else if (action == "+") {
+        hunger += integer;
+    }
+    hunger = clamp(hunger, 0, 10);
+    if (hunger == 0 && random(1, 10) == 1) {
+        updateHappiness("-", 1);
+    } 
+    let text = "";
+    for (let i = 0; i < Math.floor(hunger / 2); i++) {
+        text = text + "*";
+    }
+    if (hunger % 2 != 0) {
+        text = text + "^";
+    }
+    for (let i = 0; i < Math.floor((10 - hunger) / 2); i++) {
+        text = text + "_";
+    }
+    document.getElementById("hunger").innerText = `Hunger: ${text}`;
+}
+////
+
+////Core functions
 function clamp(value, min, max) {
     if (value < min) {
         return min;
@@ -108,5 +181,6 @@ function clamp(value, min, max) {
 }
 
 function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
+////
