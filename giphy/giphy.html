@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="centre">
-    <table>
+    <table id="table">
         <tr>
             <th>Name: Mildew</th><th>Born: D/M/Y</th><th>Element: Water</th>
         </tr>
@@ -21,6 +21,17 @@
                 <div id="enclosure">
                     <img id="world" draggable="false" src="./assets/images/giphypet/world.webp">
                     <img id="pet" draggable="false" src="./assets/images/giphypet/mildew.gif">
+                    <div id="cover" class="hidden"></div>
+                    <div id="gamble" class="hidden">
+                        <table>
+                            <tr>
+                                <th>🌸</th>
+                                <th>💠</th>
+                                <th>🍀</th>
+                            </tr>
+                        </table>
+                        <button>Start</button>
+                    </div>
                 </div>
             </th>
             <th>
@@ -30,8 +41,8 @@
                     <div class="shop-row"><p>🥗</p><p>🥕</p><p>🥬</p></div>
                     <div class="shop-row"><p>☕</p><p>🥛</p><p>🧃</p></div>
                     <br>Interactions:
-                    <br><button>Pet</button>
-                    <br><button>Gamble</button>
+                    <br><button id="buttonPet">Pet</button>
+                    <br><button id="buttonGamble">Gamble</button>
                     <br><button>Shower</button>
                     <br><button>Party</button>
                 </span>
@@ -41,7 +52,7 @@
             <th colspan="3">
                 <div class="centre">
                     <p>Speech Bubble:</p>
-                    <textarea id="speechBubble" rows="2" spellcheck="false" readonly>> Hungy!!! Feed me!!! >:{{{{</textarea>
+                    <textarea id="speechBubble" rows="2" spellcheck="false" readonly></textarea>
                 </div>
             </th>
         </tr>

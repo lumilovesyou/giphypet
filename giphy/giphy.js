@@ -19,6 +19,7 @@ for (let i = 0; i < shopRows.length; i++) {
             if (money >= 5) {
                 updateMoney("-", 5);
                 playSound("./assets/audio/purchase.mp3");
+                updateHunger("+", 2);
             }
         });
     }
@@ -28,14 +29,26 @@ pet.onmousedown = startDragPet;
 walkLoop(true);
 hungerLoop();
 talk(0);
+
+document.getElementById("buttonPet").addEventListener("click", () => {
+    updateHappiness("+", 1);
+    talk(3);
+});
+document.getElementById("buttonGamble").addEventListener("click", () => {
+    document.getElementById("cover").classList.toggle("hidden");
+    document.getElementById("gamble").classList.toggle("hidden");
+});
+
+console.log(document.getElementById("table").clientWidth)
 });
 
 ////Pet functions
 function talk(id, conditions) {
     let text = [
         ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"], //Normal
-        ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"], //Being shaken
-        ["I'm feeling a little hungry...", "*Stomach grumble*", "Snackie? owo", "Hungie...", "I'm hungry"] //Hungry
+        ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"], //Shaken
+        ["I'm a little hungy...", "*Stomach grumble*", "Snackie? owo", "Hungie...", "I'm hungry"], //Hungry
+        ["^w^", "Yay!", ":3c", ">w<", "Wawa <3", "<3333", "Petsss!!!"] //Pet
     ];
     let conditionBools = [
         beingDragged == 0
@@ -63,7 +76,9 @@ function talk(id, conditions) {
 function hungerLoop() {
     if (random(1, 35) == 1) {
         updateHunger("-", 1);
-        talk(2, 0);
+        if (hunger < 6) {
+            talk(2, 0);
+        }
     }
     setTimeout(hungerLoop, 1000);
 }

@@ -6,6 +6,11 @@ body {
     color: #ddddf6;
     font-size: 0.75em;
 }
+
+#table {
+    width: 297px; /* Need to fix width since changing element text changes width */
+}
+
 #centre {
     width: 100vw;
     height: 100vh;
@@ -22,6 +27,48 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 1% 0 1% 0;
+}
+.hidden {
+    visibility: hidden;
+    position: absolute !important;
+}
+
+/* Gambling */
+#cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+#gamble {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 203px;
+    font-size: 4em;
+    flex-direction: column;
+}
+#gamble table {
+    background-color: #ddddf6;
+    border-radius: 8px;
+}
+#gamble th {
+    background-color: #d0d0ed;
+    border: none;
+    color: black;
+    border-radius: 8px;
+}
+#gamble button {
+    margin-top: 5%;
+    width: 30%
 }
 
 /* World + Pet */
