@@ -1,14 +1,27 @@
 console.log("Hello world!");
+const urlParams = new URLSearchParams(window.location.search);
+const born = new Date(parseInt(urlParams.get('born')));
+const elements = ["💧", "🔥", "🪨", "⚡️", "🌱", "☁️"]
 let soundStack = ["","","","","","","",""];
 let pet = document.getElementById("pet");
 let speechBubble = document.getElementById("speechBubble");
 let mouseX, mouseY, petX, petY = 0;
 let beingDragged = false;
 
-//Creature Values
-let happiness = 10;
-let hunger = 10;
-let money = 10;
+////Creature Values
+let happiness = 10
+let hunger = 10
+let money = parseInt(urlParams.get("money"));
+//Url params
+document.getElementById("name").innerHTML = `Name: ${urlParams.get('name') ? urlParams.get('name') : "Mildew"}`;
+document.getElementById("born").innerHTML = `Born: ${urlParams.get('born') ? `${born.getDate()}/${born.getMonth()}/${born.getFullYear().toString().slice(2,4)}` : "D/M/Y"}`;
+document.getElementById("element").innerHTML = `Element: ${urlParams.get('element') ? elements[parseInt(urlParams.get("element"))] : "?"}`;
+money = isNaN(money) ? 10 : money;
+////
+
+updateHappiness();
+updateHunger();
+updateMoney();
 
 document.addEventListener("DOMContentLoaded", () => {
 let shopRows = document.getElementsByClassName("shop-row");
@@ -39,7 +52,7 @@ document.getElementById("buttonGamble").addEventListener("click", () => {
     document.getElementById("gamble").classList.toggle("hidden");
 });
 
-console.log(document.getElementById("table").clientWidth)
+//console.log(document.getElementById("widthMe").clientWidth);
 });
 
 ////Pet functions

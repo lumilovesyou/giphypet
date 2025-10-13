@@ -8,7 +8,15 @@ body {
 }
 
 #table {
-    width: 297px; /* Need to fix width since changing element text changes width */
+    width: 298px; /* Need to fix width since changing element text changes width */
+}
+
+#widthControlOne {
+    width: 200px;
+}
+
+#widthControlTwo {
+    width: 82px;
 }
 
 #centre {
