@@ -94,6 +94,9 @@ body {
     pointer-events: visible;
     z-index: 1;
 }
+#pet:active {
+    cursor: grabbing;
+}
 
 /* Shop */
 #shop-title {

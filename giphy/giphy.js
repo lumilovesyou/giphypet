@@ -7,6 +7,8 @@ let pet = document.getElementById("pet");
 let speechBubble = document.getElementById("speechBubble");
 let mouseX, mouseY, petX, petY = 0;
 let beingDragged = false;
+let gamblingNow = false;
+let gamblingSpins;
 
 ////Creature Values
 let happiness = 10
@@ -51,11 +53,45 @@ document.getElementById("buttonGamble").addEventListener("click", () => {
     document.getElementById("cover").classList.toggle("hidden");
     document.getElementById("gamble").classList.toggle("hidden");
 });
+document.getElementById("gambleStart").addEventListener("click", (e) => {
+    if (money > 4) {
+        money -= 5;
+        gamblingNow = !gamblingNow;
+        if (gamblingNow) {
+            e.target.innerText = "Stop";
+            e.target.disabled = true;
+            gamblingSpins = 0;
+            gamble();
+        } else {
+            e.target.innerText = "Start";
+        }
+    }
+});
 
 //console.log(document.getElementById("widthMe").clientWidth);
 });
 
 ////Pet functions
+    let slotSound = new Audio("./assets/audio/slots.mp3")
+function gamble() {
+    const gamblingIcons = ["🌸", "💠", "🍀"];
+    let slots = [document.getElementById("slotOne"), document.getElementById("slotTwo"), document.getElementById("slotThree")];
+    let slotNumbers = [0, 0, 0];
+    let slotIntervals = []
+    if(gamblingNow) {
+        slotIntervals[0] = setInterval(() => {
+            slotNumbers[0]++;
+            slotSound.play();
+        }, Math.floor(random(1,10) * 2 + 1) + 150)
+
+        gamblingSpins++;
+        setTimeout(gamble, 500);
+    }
+    if (gamblingSpins > 3) {
+        document.getElementById("gambleStart").disabled = false;
+    }
+}
+
 function talk(id, conditions) {
     let text = [
         ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"], //Normal
