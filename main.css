@@ -6,20 +6,14 @@ margin: 0;
 padding: 20px;
 position: relative;
 overflow-y: auto; 
-overflow-x: hidden;
+overflow-x: auto;
 }
 
 body::before {
 content: "";
 position: fixed;
 inset: 0;
-background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.04) 1px,
-    transparent 2px,
-    transparent 3px
-);
+background: url("assets/images/90s.png") repeat center;
 pointer-events: none;
 mix-blend-mode: overlay;
 opacity: 0.15;
@@ -42,6 +36,9 @@ color: #ffcc00;
 text-shadow: 2px 2px #000;
 text-align: center;
 margin: 10px 0 5px 0;
+}
+h1 img {
+	width: 60%;
 }
 
 h2 {
