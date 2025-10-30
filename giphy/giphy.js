@@ -7,7 +7,8 @@ let pet = document.getElementById("pet");
 let speechBubble = document.getElementById("speechBubble");
 let mouseX, mouseY, petX, petY = 0;
 let beingDragged = false;
-let gamblingNow = false;
+let startGamble = false;
+let currentlyGambling = false;
 let gamblingSpins;
 
 ////Creature Values
@@ -55,15 +56,20 @@ document.getElementById("buttonGamble").addEventListener("click", () => {
 });
 document.getElementById("gambleStart").addEventListener("click", (e) => {
     if (money > 4) {
-        money -= 5;
-        gamblingNow = !gamblingNow;
-        if (gamblingNow) {
+        if (!currentlyGambling) {
+            startGamble = true;
+            money -= 5;
+            currentlyGambling = true;
             e.target.innerText = "Stop";
             e.target.disabled = true;
             gamblingSpins = 0;
             gamble();
         } else {
+            currentlyGambling = false;
             e.target.innerText = "Start";
+            for (let i = 0; i < slotIntervals.length; i++) {
+                clearInterval(slotIntervals[i]);
+            }
         }
     }
 });
@@ -72,23 +78,27 @@ document.getElementById("gambleStart").addEventListener("click", (e) => {
 });
 
 ////Pet functions
-    let slotSound = new Audio("./assets/audio/slots.mp3")
+const gamblingIcons = ["🌸", "💠", "🍀"];
+const slotSound = new Audio("./assets/audio/slots.mp3")
+const slots = [document.getElementById("slotOne"), document.getElementById("slotTwo"), document.getElementById("slotThree")];
+const slotIcons = ["🌸", "💠", "🍀"];
+let slotIntervals = [];
 function gamble() {
-    const gamblingIcons = ["🌸", "💠", "🍀"];
-    let slots = [document.getElementById("slotOne"), document.getElementById("slotTwo"), document.getElementById("slotThree")];
     let slotNumbers = [0, 0, 0];
-    let slotIntervals = []
-    if(gamblingNow) {
+    if (startGamble) {
         slotIntervals[0] = setInterval(() => {
             slotNumbers[0]++;
+            slots[0].innerHTML = slotIcons[wrap(slotIcons.indexOf(slots[0].innerHTML) + 1, 0, 2)];
             slotSound.play();
         }, Math.floor(random(1,10) * 2 + 1) + 150)
-
-        gamblingSpins++;
-        setTimeout(gamble, 500);
+        startGamble = false;
     }
-    if (gamblingSpins > 3) {
-        document.getElementById("gambleStart").disabled = false;
+    if (currentlyGambling) {
+        gamblingSpins++;
+        if (gamblingSpins > 3) {
+            document.getElementById("gambleStart").disabled = false;
+        }
+        setTimeout(gamble, 500);
     }
 }
 
@@ -257,6 +267,16 @@ function clamp(value, min, max) {
         return min;
     } else if (value > max) {
         return max;
+    } else {
+        return value;
+    }
+}
+
+function wrap(value, min, max) {
+    if (value < min) {
+        return max;
+    } else if (value > max) {
+        return min;
     } else {
         return value;
     }
