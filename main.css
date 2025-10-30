@@ -18,6 +18,7 @@ pointer-events: none;
 mix-blend-mode: overlay;
 opacity: 0.15;
 z-index: 10;
+animation: backgroundFade 350ms;
 }
 
 body::after {
@@ -29,6 +30,10 @@ pointer-events: none;
 z-index: 11;
 }
 
+@keyframes backgroundFade {
+  from { opacity: 0; }
+  to {  opacity: 0.154; }
+}
 
 h1 {
 font-size: 42px;
