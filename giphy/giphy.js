@@ -55,21 +55,21 @@ document.getElementById("buttonGamble").addEventListener("click", () => {
     document.getElementById("gamble").classList.toggle("hidden");
 });
 document.getElementById("gambleStart").addEventListener("click", (e) => {
-    if (money > 4) {
-        if (!currentlyGambling) {
+    if (currentlyGambling) {
+        currentlyGambling = false;
+        e.target.innerText = "Start";
+        for (let i = 0; i < slotIntervals.length; i++) {
+            clearInterval(slotIntervals[i]);
+        }
+    } else {
+        if (money > 4) {
+            updateMoney("-", 5);
             startGamble = true;
-            money -= 5;
             currentlyGambling = true;
             e.target.innerText = "Stop";
             e.target.disabled = true;
             gamblingSpins = 0;
-            gamble();
-        } else {
-            currentlyGambling = false;
-            e.target.innerText = "Start";
-            for (let i = 0; i < slotIntervals.length; i++) {
-                clearInterval(slotIntervals[i]);
-            }
+            gamble();  
         }
     }
 });
@@ -81,16 +81,17 @@ document.getElementById("gambleStart").addEventListener("click", (e) => {
 const gamblingIcons = ["🌸", "💠", "🍀"];
 const slotSound = new Audio("./assets/audio/slots.mp3")
 const slots = [document.getElementById("slotOne"), document.getElementById("slotTwo"), document.getElementById("slotThree")];
-const slotIcons = ["🌸", "💠", "🍀"];
+const slotIcons = ["🌸", "🌸", "🌸"];
 let slotIntervals = [];
+//I really need to add more sounds and improve the slot tick rn :sob:
 function gamble() {
-    let slotNumbers = [0, 0, 0];
     if (startGamble) {
-        slotIntervals[0] = setInterval(() => {
-            slotNumbers[0]++;
-            slots[0].innerHTML = slotIcons[wrap(slotIcons.indexOf(slots[0].innerHTML) + 1, 0, 2)];
-            slotSound.play();
-        }, Math.floor(random(1,10) * 2 + 1) + 150)
+        for (let i = 0; i < slotNumbers.length; i++) {
+            slotIntervals[i] = setInterval(() => {
+                slots[i].innerHTML = gamblingIcons[wrap(slotIcons.indexOf(slots[i].innerHTML) + 1, 0, 2)];
+                slotSound.play();
+            }, Math.floor(Math.random() * 20 + 1) + 150);
+        }
         startGamble = false;
     }
     if (currentlyGambling) {
