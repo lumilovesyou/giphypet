@@ -50,16 +50,25 @@ document.getElementById("buttonPet").addEventListener("click", () => {
     updateHappiness("+", 1);
     talk(3);
 });
+
 document.getElementById("buttonGamble").addEventListener("click", () => {
     document.getElementById("cover").classList.toggle("hidden");
     document.getElementById("gamble").classList.toggle("hidden");
 });
+
 document.getElementById("gambleStart").addEventListener("click", (e) => {
     if (currentlyGambling) {
         currentlyGambling = false;
         e.target.innerText = "Start";
+        isEqual = true;
         for (let i = 0; i < slotIntervals.length; i++) {
             clearInterval(slotIntervals[i]);
+            if (slots[i].innerHTML != slots[0].innerHTML) {
+                isEqual = false;
+            }
+        }
+        if (isEqual) {
+            updateMoney("+", 20);
         }
     } else {
         if (money > 4) {
@@ -83,13 +92,15 @@ const slotSound = new Audio("./assets/audio/slots.mp3")
 const slots = [document.getElementById("slotOne"), document.getElementById("slotTwo"), document.getElementById("slotThree")];
 const slotIcons = ["🌸", "🌸", "🌸"];
 let slotIntervals = [];
-//I really need to add more sounds and improve the slot tick rn :sob:
+//I really need to add more sounds and improve the slot tick rn :sob: (plus add things your pet says for you winning/losing)
 function gamble() {
     if (startGamble) {
-        for (let i = 0; i < slotNumbers.length; i++) {
+        for (let i = 0; i < slots.length; i++) {
             slotIntervals[i] = setInterval(() => {
-                slots[i].innerHTML = gamblingIcons[wrap(slotIcons.indexOf(slots[i].innerHTML) + 1, 0, 2)];
-                slotSound.play();
+                slots[i].innerHTML = gamblingIcons[wrap(gamblingIcons.indexOf(slots[i].innerHTML) + 1, 0, 2)];
+                if (i == 0) {
+                    playSound("./assets/audio/slots.mp3", random(30, 40)/100);
+                }
             }, Math.floor(Math.random() * 20 + 1) + 150);
         }
         startGamble = false;
@@ -201,10 +212,16 @@ function petPosition(x, y, hardClamp) {
 // //
 ////
 
+document.addEventListener("DOMContentLoaded", () => {
+    
+})
+
 ////Pet value control
-function playSound(sound) {
+function playSound(sound, volume) {
+    volume = volume || 0.35
     soundStack.splice(0, 0, new Audio(sound));
-    soundStack[0].volume = 0.35;
+    new Audio()
+    soundStack[0].volume = volume;
     soundStack[0].play();
     soundStack.pop();
 }
