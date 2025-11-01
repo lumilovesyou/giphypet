@@ -69,6 +69,10 @@ document.getElementById("gambleStart").addEventListener("click", (e) => {
         }
         if (isEqual) {
             updateMoney("+", 20);
+            talk(4);
+        } else {
+            talk(5);
+            talk(6, 1);
         }
     } else {
         if (money > 4) {
@@ -119,10 +123,14 @@ function talk(id, conditions) {
         ["Hmm...", "I like thinking", "I wanna go for a walk", "Pets? omo"], //Normal
         ["Wah!", "I'm getting dizzy!", "What're you doing?!", "@w@", "Please stop!", "Meanie!", "Whoa!", "Blehhh >m<"], //Shaken
         ["I'm a little hungy...", "*Stomach grumble*", "Snackie? owo", "Hungie...", "I'm hungry"], //Hungry
-        ["^w^", "Yay!", ":3c", ">w<", "Wawa <3", "<3333", "Petsss!!!"] //Pet
+        ["^w^", "Yay!", ":3c", ">w<", "Wawa <3", "<3333", "Petsss!!!"], //Pet
+        ["Yay!", "Wow! Good job!", "Ooh! Now you can buy me more food!", "Money >:3", "My hero!", "Yippee!"], //Win slots
+        ["Aw :{", "Dang, that sucks", "Does this mean no treats?", "No money :{", "Maybe try again?"], //Lose slots
+        ["qwq", "How're we going to afford treats now??", "No snackies :{", "No money :{", "I can't believe you lost"] //Lose slots + no money
     ];
     let conditionBools = [
-        beingDragged == 0
+        beingDragged == 0,
+        money < 5
     ]
     let doTalking = true;
     if (typeof(conditions) == "object") {
@@ -220,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function playSound(sound, volume) {
     volume = volume || 0.35
     soundStack.splice(0, 0, new Audio(sound));
-    new Audio()
     soundStack[0].volume = volume;
     soundStack[0].play();
     soundStack.pop();
