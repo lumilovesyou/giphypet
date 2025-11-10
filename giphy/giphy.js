@@ -2,6 +2,7 @@ console.log("Hello world!");
 const urlParams = new URLSearchParams(window.location.search);
 const born = new Date(parseInt(urlParams.get('born')));
 const elements = ["💧", "🔥", "🪨", "⚡️", "🌱", "☁️"]
+const washAudio = new Audio("./assets/audio/shower.mp3");
 let soundStack = ["","","","","","","",""];
 let pet = document.getElementById("pet");
 let speechBubble = document.getElementById("speechBubble");
@@ -10,6 +11,7 @@ let beingDragged = false;
 let startGamble = false;
 let currentlyGambling = false;
 let gamblingSpins;
+let currentlyShowering;
 
 ////Creature Values
 let happiness = 10
@@ -54,6 +56,21 @@ document.getElementById("buttonPet").addEventListener("click", () => {
 document.getElementById("buttonGamble").addEventListener("click", () => {
     document.getElementById("cover").classList.toggle("hidden");
     document.getElementById("gamble").classList.toggle("hidden");
+});
+
+// Wash
+washAudio.addEventListener("ended", () => {
+    currentlyShowering = false;
+    document.getElementById("wash").classList.toggle("hidden");
+})
+
+document.getElementById("buttonWash").addEventListener("click", () => {
+    if (money >= 5 && !currentlyShowering) {
+        currentlyShowering = true;
+        document.getElementById("wash").classList.toggle("hidden");
+        updateMoney("-", 5);
+        washAudio.play();
+    }
 });
 
 document.getElementById("gambleStart").addEventListener("click", (e) => {

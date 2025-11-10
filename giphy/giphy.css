@@ -51,11 +51,10 @@ body {
     top: 0;
     left: 0;
 }
-#gamble {
+.secondaryEnclosure {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,6 +62,9 @@ body {
     height: 203px;
     font-size: 4em;
     flex-direction: column;
+}
+#gamble {
+    z-index: 2;
 }
 #gamble table {
     background-color: #ddddf6;
@@ -77,6 +79,18 @@ body {
 #gamble button {
     margin-top: 5%;
     width: 30%
+}
+
+/* Shower */
+#wash {
+    z-index: 3;
+}
+#fakePet {
+    width: 70%;
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 30%;
+    left: auto;
 }
 
 /* World + Pet */
