@@ -63,6 +63,9 @@ body {
     font-size: 4em;
     flex-direction: column;
 }
+.secondaryEnclosure #backgroundImage {
+    width: 100%;
+}
 #gamble {
     z-index: 2;
 }
@@ -85,12 +88,36 @@ body {
 #wash {
     z-index: 3;
 }
-#fakePet {
+.fakePet {
     width: 70%;
     aspect-ratio: 1/1;
     position: absolute;
     top: 30%;
     left: auto;
+    z-index: 7;
+}
+
+/* Party */
+#party {
+    z-index: 4;
+}
+.half {
+    width: 50% !important;
+    top: 40% !important;
+}
+.one {
+    left: -8% !important;
+    z-index: 8;
+}
+.two {
+    right: -5% !important;
+    top: 30% !important;
+    z-index: 6;
+}
+.three {
+    left: 10% !important;
+    top: 30% !important;
+    z-index: 6;
 }
 
 /* World + Pet */

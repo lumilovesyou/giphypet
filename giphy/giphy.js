@@ -12,6 +12,7 @@ let startGamble = false;
 let currentlyGambling = false;
 let gamblingSpins;
 let currentlyShowering;
+let currentlyPartying;
 
 ////Creature Values
 let happiness = 10
@@ -65,11 +66,19 @@ washAudio.addEventListener("ended", () => {
 })
 
 document.getElementById("buttonWash").addEventListener("click", () => {
-    if (money >= 5 && !currentlyShowering) {
+    if (money >= 5 && !currentlyShowering && !currentlyPartying) {
         currentlyShowering = true;
         document.getElementById("wash").classList.toggle("hidden");
         updateMoney("-", 5);
         washAudio.play();
+    }
+});
+
+document.getElementById("partyButton").addEventListener("click", () => {
+    if (money >= 20 && !currentlyShowering && !currentlyPartying) {
+        currentlyPartying = true;
+        document.getElementById("party").classList.toggle("hidden");
+        updateMoney("-", 20);
     }
 });
 
