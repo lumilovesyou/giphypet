@@ -1,8 +1,10 @@
 console.log("Hello world!");
 const urlParams = new URLSearchParams(window.location.search);
+const root = document.querySelector(":root");
 const born = new Date(parseInt(urlParams.get('born')));
 const elements = ["💧", "🔥", "🪨", "⚡️", "🌱", "☁️"]
 const washAudio = new Audio("./assets/audio/shower.mp3");
+const partyAudio = new Audio("./assets/audio/party-music-1.mp3");
 let soundStack = ["","","","","","","",""];
 let pet = document.getElementById("pet");
 let speechBubble = document.getElementById("speechBubble");
@@ -10,19 +12,33 @@ let mouseX, mouseY, petX, petY = 0;
 let beingDragged = false;
 let startGamble = false;
 let currentlyGambling = false;
+let eventHappening = false;
 let gamblingSpins;
-let currentlyShowering;
-let currentlyPartying;
 
-////Creature Values
-let happiness = 10
-let hunger = 10
-let money = parseInt(urlParams.get("money"));
-//Url params
+//Slots win music
+//Slots lose music
+//More events
+//Rain
+//Fix euros
+
+////Url params & Creature Values
+function urlParam(id, defaultValue, isInt) {
+    value = urlParams.get(id);
+    return ((isNaN(value) && isInt) || value === null) ? defaultValue : value;
+}
+
+let happiness = parseInt(urlParam("happiness", 10, true));
+let hunger = parseInt(urlParam("hunger", 10, true));
+let money = parseInt(urlParam("money", 15, true));
+
 document.getElementById("name").innerHTML = `Name: ${urlParams.get('name') ? urlParams.get('name') : "Mildew"}`;
 document.getElementById("born").innerHTML = `Born: ${urlParams.get('born') ? `${born.getDate()}/${born.getMonth()}/${born.getFullYear().toString().slice(2,4)}` : "D/M/Y"}`;
 document.getElementById("element").innerHTML = `Element: ${urlParams.get('element') ? elements[parseInt(urlParams.get("element"))] : "?"}`;
-money = isNaN(money) ? 10 : money;
+
+root.style.setProperty("--line-colour", urlParam("linecolour", "#ddddf6"));
+root.style.setProperty("--background-image", `url(${urlParam("bgimg", "./assets/images/giphypet/background.png")})`);
+document.getElementById("pet").src = urlParam("petimg", "./assets/images/giphypet/mildew.gif");
+document.getElementById("world").src = urlParam("worldimg", "./assets/images/giphypet/world.webp");
 ////
 
 updateHappiness();
@@ -61,24 +77,31 @@ document.getElementById("buttonGamble").addEventListener("click", () => {
 
 // Wash
 washAudio.addEventListener("ended", () => {
-    currentlyShowering = false;
+    eventHappening = false;
     document.getElementById("wash").classList.toggle("hidden");
 })
 
 document.getElementById("buttonWash").addEventListener("click", () => {
-    if (money >= 5 && !currentlyShowering && !currentlyPartying) {
-        currentlyShowering = true;
+    if (money >= 5 && !eventHappening) {
+        eventHappening = true;
         document.getElementById("wash").classList.toggle("hidden");
         updateMoney("-", 5);
         washAudio.play();
     }
 });
 
+//Party
+partyAudio.addEventListener("ended", () => {
+    eventHappening = false;
+    document.getElementById("party").classList.toggle("hidden");
+})
+
 document.getElementById("partyButton").addEventListener("click", () => {
-    if (money >= 20 && !currentlyShowering && !currentlyPartying) {
-        currentlyPartying = true;
+    if (money >= 20 && !eventHappening) {
+        eventHappening = true;
         document.getElementById("party").classList.toggle("hidden");
         updateMoney("-", 20);
+        partyAudio.play();
     }
 });
 
@@ -183,6 +206,13 @@ function hungerLoop() {
         updateHunger("-", 1);
         if (hunger < 6) {
             talk(2, 0);
+        }
+    }
+    if (random(1, 11) == 1) {
+        if (hunger < 5 && random(1, 10) == 1) {
+            updateHappiness("-", 1);
+        } else if (hunger == 0) {
+            updateHappiness("-", 1); 
         }
     }
     setTimeout(hungerLoop, 1000);
@@ -295,9 +325,6 @@ function updateHunger(action, integer) {
         hunger += integer;
     }
     hunger = clamp(hunger, 0, 10);
-    if (hunger == 0 && random(1, 10) == 1) {
-        updateHappiness("-", 1);
-    } 
     let text = "";
     for (let i = 0; i < Math.floor(hunger / 2); i++) {
         text = text + "*";

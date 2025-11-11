@@ -1,9 +1,14 @@
+:root {
+    --line-colour: #ddddf6;
+    --background-image: url("./assets/images/giphypet/background.png");
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-image: url("./assets/images/giphypet/background.png");
+    background-image: var(--background-image);
     background-size: 7%;
-    color: #ddddf6;
+    color: var(--line-colour);
     font-size: 0.75em;
 }
 
@@ -122,6 +127,7 @@ body {
 
 /* World + Pet */
 #enclosure {
+    /*background-color: red;*/
     position: relative;
     overflow: hidden;
 }
@@ -167,11 +173,11 @@ p {
 table {
     margin: 0;
     padding: 0;
-    border: solid #ddddf6 1px;
+    border: solid var(--line-colour) 1px;
     border-radius: 1%;
 }
 th {
-    border: solid #ddddf6 1px;
+    border: solid var(--line-colour) 1px;
     border-radius: 1%;
 }
 button {
