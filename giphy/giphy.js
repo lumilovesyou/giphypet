@@ -1,7 +1,6 @@
 console.log("Hello world!");
 const urlParams = new URLSearchParams(window.location.search);
 const root = document.querySelector(":root");
-const born = new Date(parseInt(urlParams.get('born')));
 const elements = ["💧", "🔥", "🪨", "⚡️", "🌱", "☁️"]
 const washAudio = new Audio("./assets/audio/shower.mp3");
 const partyAudio = new Audio("./assets/audio/party-music-1.mp3");
@@ -27,12 +26,14 @@ function urlParam(id, defaultValue, isInt) {
     return ((isNaN(value) && isInt) || value === null) ? defaultValue : value;
 }
 
+
+const born = new Date(parseInt(urlParam("born", Date.now())));
 let happiness = parseInt(urlParam("happiness", 10, true));
 let hunger = parseInt(urlParam("hunger", 10, true));
 let money = parseInt(urlParam("money", 15, true));
 
 document.getElementById("name").innerHTML = `Name: ${urlParams.get('name') ? urlParams.get('name') : "Mildew"}`;
-document.getElementById("born").innerHTML = `Born: ${urlParams.get('born') ? `${born.getDate()}/${born.getMonth()}/${born.getFullYear().toString().slice(2,4)}` : "D/M/Y"}`;
+document.getElementById("born").innerHTML = `Born: ${born.getDate()}/${born.getMonth()}/${born.getFullYear().toString().slice(2,4)}`;
 document.getElementById("element").innerHTML = `Element: ${urlParams.get('element') ? elements[parseInt(urlParams.get("element"))] : "?"}`;
 
 root.style.setProperty("--line-colour", urlParam("linecolour", "#ddddf6"));
@@ -105,6 +106,7 @@ document.getElementById("partyButton").addEventListener("click", () => {
         eventHappening = true;
         document.getElementById("party").classList.toggle("hidden");
         updateMoney("-", 20);
+        updateHappiness("+", 10);
         partyAudio.play();
     }
 });

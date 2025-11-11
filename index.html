@@ -16,39 +16,46 @@
   <div class="container">
 
     <div class="element">
+      <div class="centre">
       <label>Name:</label>
-      <input type="text" placeholder="Ruby" id="name">
+      <input type="text" placeholder="Mildew" id="name">
 
-      <label>Type:</label>
+      <label>Element:</label>
       <select id="type">
-        <option value="fire">🔥 Fire</option>
-        <option value="grass">🌿 Grass</option>
-        <option value="water">💧 Water</option>
-        <option value="earth">🌎 Earth</option>
+        <option value="0">💧 Water</option>
+        <option value="1">🔥 Fire</option>
+        <option value="2">🪨 Rock</option>
+        <option value="3">⚡️ Electric</option>
+        <option value="4">🌱 Plant</option>
+        <option value="5">☁️ Cloud</option>
       </select>
 
       <label>Line Colour:</label>
-      <input type="color" value="#ddddf6">
+      <input id="lineColour" type="color" value="#ddddf6">
 
-      <label>Text Colour:</label>
-      <input type="color" value="#ddddf6">
+      <label style="color: grey">Text Colour: <small>(i'm too lazy to do this sorry)</small></label>
+      <input type="color" value="#ddddf6" disabled>
 
-      <button>Spawn</button>
+      <label>Image (Pet):</label>
+      <input id="petImage" type="url" value="https://lumilovesyou.github.io/giphypet/giphy/assets/images/giphypet/mildew.gif" placeholder="Pet image URL">
 
-      <label>Output:</label>
-      <textarea></textarea>
+      <label>Image (World):</label>
+      <input id="worldImage" type="url" value="https://lumilovesyou.github.io/giphypet/giphy/assets/images/giphypet/world.webp" placeholder="World image URL">
+
+      <label>Image (Background):</label>
+      <input id="backgroundImage" type="url" value="https://lumilovesyou.github.io/giphypet/giphy/assets/images/giphypet/background.png" placeholder="Background image URL">
+      </div>
     </div>
 
     <div class="element">
-      <label>Image (Pet):</label>
-      <input type="url" value="https://lumilovesyou.github.io/lumiverse/assets/images/gifypet/mildew.gif" placeholder="Pet image URL">
-
-      <label>Image (World):</label>
-      <input type="url" value="https://lumilovesyou.github.io/lumiverse/assets/images/gifypet/background.webp" placeholder="World image URL">
-
-      <a href="./giphy/giphy.html" target="_blank">
-        <iframe src="./giphy/giphy.html" scrolling="no"></iframe>
+      <a href="./giphy/giphy.html?element=0" target="_blank">
+        <iframe src="./giphy/giphy.html?element=0" id="iframe" scrolling="no"></iframe>
       </a>
+
+      <button id="spawnButton">Spawn</button>
+
+      <label>Output:</label>
+      <textarea id="output"></textarea>
     </div>
 
   </div>
