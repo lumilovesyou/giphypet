@@ -38,6 +38,10 @@ document.getElementById("element").innerHTML = `Element: ${urlParams.get('elemen
 root.style.setProperty("--line-colour", urlParam("linecolour", "#ddddf6"));
 root.style.setProperty("--background-image", `url(${urlParam("bgimg", "./assets/images/giphypet/background.png")})`);
 document.getElementById("pet").src = urlParam("petimg", "./assets/images/giphypet/mildew.gif");
+let fakePets = document.getElementsByClassName("fakePet");
+for (let i = 0; i < 2; i++) {
+    fakePets[i].src = urlParam("petimg", "./assets/images/giphypet/mildew.gif");
+}
 document.getElementById("world").src = urlParam("worldimg", "./assets/images/giphypet/world.webp");
 ////
 
